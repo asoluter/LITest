@@ -1,0 +1,97 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.asoluter.litest.LoginActivity"
+    android:gravity="center">
+
+    <include android:id="@+id/login_toolbar"
+        layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:background="@color/colorPrimary"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/app_name"
+            android:id="@+id/titleLoginView"
+            android:textSize="75sp"
+            android:layout_marginBottom="48dp"
+            android:layout_marginTop="-72dp" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="330dp"
+            android:layout_height="250dp"
+            android:elevation="8dp"
+            android:id="@+id/cardLoginView">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+
+                android:theme="@style/AppTheme"
+                android:gravity="center_vertical|center_horizontal">
+
+
+                <EditText
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:hint="@string/login_label"
+                    android:ems="10"
+                    android:id="@+id/mailLoginText"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/passLoginText"
+                    android:hint="@string/pass_label"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <Button
+                    android:layout_width="280dp"
+                    android:layout_height="48dp"
+                    android:text="@string/title_activity_login"
+                    android:background="@drawable/button_shape_login"
+                    android:theme="@style/LoginButtons"
+                    android:id="@+id/loginButton"
+                    android:layout_marginBottom="8dp"
+                    android:capitalize="characters"
+                    android:clickable="true" />
+
+                <Button
+                    android:layout_width="280dp"
+                    android:layout_height="48dp"
+                    android:text="@string/signup_label"
+                    android:theme="@style/LoginButtons"
+                    android:background="@drawable/button_shape_login"
+                    android:id="@+id/signupButon"
+                    android:layout_marginBottom="8dp"
+                    android:clickable="true"
+                    android:capitalize="characters" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+
+</LinearLayout>

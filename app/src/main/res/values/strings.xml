@@ -1,6 +1,29 @@
 <resources>
     <string name="app_name">LITest</string>
-
     <string name="hello_world">Hello world!</string>
+    <string name="app_font">fonts/DroidSansMono.ttf</string>
+    <string name="server_ip">diy-asolutworld.rhcloud.com</string>
+
+    <!-- Menu -->
     <string name="action_settings">Settings</string>
+
+    <!-- Login -->
+    <string name="title_activity_login">Login</string>
+    <string name="mail_label">Email</string>
+    <string name="pass_label">Password</string>
+    <string name="login_label">Login</string>
+    <string name="signup_label">Sign up</string>
+
+    <!-- Signup -->
+
+    <string name="title_activity_signup">Sign up</string>
+    <string name="name_label">Name</string>
+    <string name="address_label">Address</string>
+    <string name="birth_label">Birth date</string>
+    <string name="phone_label">Phone</string>
+    <string name="title_activity_choose_test">ChooseTestActivity</string>
+    <string name="title_activity_test">TestActivity</string>
+    
+
+
 </resources>

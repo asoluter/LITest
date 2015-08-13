@@ -1,0 +1,19 @@
+<resources>
+    <!-- Menu -->
+    <string name="action_settings">Настройки</string>
+
+    <!-- Login -->
+    <string name="title_activity_login">Войти</string>
+    <string name="mail_label">Email</string>
+    <string name="pass_label">Пароль</string>
+    <string name="login_label">Логин</string>
+    <string name="signup_label">Регистрация</string>
+
+    <!-- Signup -->
+
+    <string name="title_activity_signup">Зарегистрироваться</string>
+    <string name="name_label">Имя и фамилия</string>
+    <string name="address_label">Адрес</string>
+    <string name="birth_label">Дата рождения</string>
+    <string name="phone_label">Номер телефона</string>
+</resources>
