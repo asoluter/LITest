@@ -13,7 +13,6 @@
 
     <string name="title_activity_signup">Зарегистрироваться</string>
     <string name="name_label">Имя и фамилия</string>
-    <string name="address_label">Адрес</string>
     <string name="birth_label">Дата рождения</string>
     <string name="phone_label">Номер телефона</string>
 </resources>

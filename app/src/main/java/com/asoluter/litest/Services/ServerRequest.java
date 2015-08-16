@@ -23,12 +23,13 @@ public class ServerRequest {
     private static void run(){
 
         try {
-            SocketAddress socketAddress=new InetSocketAddress("192.168.1.7",8000);
-            socket=new Socket();
+            //SocketAddress socketAddress=new InetSocketAddress("192.168.1.7",8080);
+            socket=new Socket("192.168.1.7",8080);
             online=true;
-            socket.connect(socketAddress,10000);
+            //socket.connect(socketAddress,10000);
 
         } catch (IOException e) {
+            e.printStackTrace();
             online=false;
         }
 
@@ -56,6 +57,7 @@ public class ServerRequest {
         int res=0;
 
         run();
+
         if(online) {
             try {
                         out.writeObject(new TypingObject(Strings.TEST,authObject));
@@ -73,9 +75,6 @@ public class ServerRequest {
                     }
             stop();
         }
-
-
-
 
         return res;
     }

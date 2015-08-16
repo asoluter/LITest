@@ -17,7 +17,6 @@ import com.asoluter.litest.Services.ServerRequest;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Typeface font;
     private TextView title;
     private EditText mail;
     private EditText pass;
