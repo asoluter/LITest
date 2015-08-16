@@ -1,6 +1,8 @@
 package com.asoluter.litest.Objects;
 
-public class AnsObject {
+import java.io.Serializable;
+
+public class AnsObject implements Serializable {
     //TODO: Make object for answers
 
 }

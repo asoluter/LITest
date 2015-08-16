@@ -1,8 +1,9 @@
 package com.asoluter.litest.Objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TestResult {
+public class TestResult implements Serializable {
     private ArrayList<Integer> tests;
     private int testN;
 

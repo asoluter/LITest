@@ -22,6 +22,7 @@
     <string name="phone_label">Phone</string>
     <string name="title_activity_choose_test">ChooseTestActivity</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_litest">LITest</string>
     
 
 

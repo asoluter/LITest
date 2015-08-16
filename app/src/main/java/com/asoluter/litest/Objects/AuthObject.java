@@ -1,6 +1,8 @@
 package com.asoluter.litest.Objects;
 
-public class AuthObject {
+import java.io.Serializable;
+
+public class AuthObject implements Serializable {
     private String userName;
     private String userPassword;
 

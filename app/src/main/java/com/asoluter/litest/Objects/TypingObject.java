@@ -1,6 +1,8 @@
 package com.asoluter.litest.Objects;
 
-public class TypingObject {
+import java.io.Serializable;
+
+public class TypingObject implements Serializable {
 
     private Object object;
     private String type;
