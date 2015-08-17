@@ -1,6 +1,8 @@
 package com.asoluter.litest.Objects;
 
-public class RegData {
+import java.io.Serializable;
+
+public class RegData implements Serializable {
     private String userName;
     private String userPassword;
     private String userMail;

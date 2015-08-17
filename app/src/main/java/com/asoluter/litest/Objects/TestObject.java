@@ -1,6 +1,8 @@
 package com.asoluter.litest.Objects;
 
-public class TestObject {
+import java.io.Serializable;
+
+public class TestObject implements Serializable {
     private String s;
 
     public TestObject(String s){
