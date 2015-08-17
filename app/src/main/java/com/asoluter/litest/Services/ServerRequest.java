@@ -67,6 +67,7 @@ public class ServerRequest extends Service {
             stopS();
             return null;
         }
+
         private void deBundle(){
             switch (typingObject.getType()){
                 case Strings.AUTH:{
@@ -96,8 +97,8 @@ public class ServerRequest extends Service {
 
             if (online) {
                 try {
-                    in= (ObjectInputStream) socket.getInputStream();
-                    out= (ObjectOutputStream) socket.getOutputStream();
+                    in= new ObjectInputStream(socket.getInputStream()) ;
+                    out=new ObjectOutputStream(socket.getOutputStream());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

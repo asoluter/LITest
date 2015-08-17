@@ -7,4 +7,5 @@ public class Strings {
     public static final String TEST_RESULT="testRes";
     public static final String PUZZLE="puzzle";
     public static final String REGISTER="reg";
+    public static final String STOP="stop";
 }
