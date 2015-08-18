@@ -1,6 +1,7 @@
 package com.asoluter.litest.Services;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
@@ -58,6 +59,8 @@ public class ServerRequest extends Service {
         private  ObjectInputStream in;
         private  boolean online;
         TypingObject typingObject;
+
+        BroadcastReceiver broadcastReceiver;
 
         @Override
         protected Void doInBackground(TypingObject... params) {
@@ -140,6 +143,10 @@ public class ServerRequest extends Service {
             Intent intent=new Intent(LoginActivity.BROADCAST_ACTION);
             intent.putExtra(LoginActivity.RESULT,res);
             sendBroadcast(intent);
+        }
+
+        private void refresh(){
+
         }
     }
 

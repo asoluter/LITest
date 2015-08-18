@@ -121,8 +121,6 @@ public class LoginActivity extends AppCompatActivity {
         saveCreds();
 
         Intent intent=new Intent(getApplicationContext(),SignupActivity.class);
-        intent.putExtra(getString(R.string.login_label),mail.getText().toString());
-        intent.putExtra(getString(R.string.pass_label),pass.getText().toString());
         startActivity(intent);
     }
 

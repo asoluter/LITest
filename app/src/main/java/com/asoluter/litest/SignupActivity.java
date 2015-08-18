@@ -18,6 +18,8 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         initToolbar();
+
+        /*TODO: MAKE SIGNUP */
     }
 
     protected void initToolbar(){
