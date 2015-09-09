@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -14,11 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.asoluter.litest.Objects.AuthObject;
-
+import com.asoluter.litest.Objects.NullObject;
 import com.asoluter.litest.Objects.Strings;
 import com.asoluter.litest.Objects.TypingObject;
+import com.asoluter.litest.Services.Broadcasts.Broadcasts;
+import com.asoluter.litest.Services.Broadcasts.Events.LoginResultEvent;
 import com.asoluter.litest.Services.ServerRequest;
+import com.asoluter.litest.Utility.CyclingAsync;
+
 
 public class LoginActivity extends AppCompatActivity {
     SharedPreferences preferences;
@@ -32,9 +36,11 @@ public class LoginActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private BroadcastReceiver broadcastReceiver;
-    public static final String BROADCAST_ACTION="login_service";
-    public static final String RESULT="result";
+    Intent service;
 
+    public static String COMMAND;
+
+    CyclingAsync cyclingAsync;
 
     @Override
     protected void onDestroy() {
@@ -53,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        preferences=getPreferences(MODE_PRIVATE);
+        preferences=getSharedPreferences("login", MODE_PRIVATE);
         prefEditor=preferences.edit();
 
         title=(TextView)findViewById(R.id.titleLoginView);
@@ -64,20 +70,30 @@ public class LoginActivity extends AppCompatActivity {
 
         initToolbar();
 
+        cyclingAsync=new CyclingAsync(this);
+
         loginButton.setOnClickListener(onClickListener);
         signupButton.setOnClickListener(onClickListener);
 
         broadcastReceiver=new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                int ans=intent.getIntExtra(RESULT,0);
-                if(ans==666)mail.setText("All is Connected)",TextView.BufferType.EDITABLE);
-                else mail.setText("Baaaaaad", TextView.BufferType.EDITABLE);
+                LoginResultEvent event=(LoginResultEvent)intent.getSerializableExtra(Broadcasts.BROADCAST_LOGIN);
+                if(event.getLogin()){
+                    //cyclingAsync.stopCycling();
+                    Intent mainIntent=new Intent(LoginActivity.this,MainActivity.class);
+                    mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(mainIntent);
+                }
+                else {
+                    //cyclingAsync.stopCycling();
+                    Snackbar.make(pass,getString(R.string.wrong_mail_pass),Snackbar.LENGTH_INDEFINITE)
+                            .show();
+                }
             }
         };
-
-        IntentFilter intentFilter=new IntentFilter(BROADCAST_ACTION);
-        registerReceiver(broadcastReceiver,intentFilter);
+        IntentFilter filter=new IntentFilter(Broadcasts.BROADCAST_LOGIN);
+        registerReceiver(broadcastReceiver,filter);
 
     }
 
@@ -128,17 +144,24 @@ public class LoginActivity extends AppCompatActivity {
 
         saveCreds();
 
-        AuthObject authObject=new AuthObject(preferences.getString("login",""),preferences.getString("pass",""));
-        TypingObject typingObject=new TypingObject(Strings.TEST,authObject);
-        Intent service=new Intent(this, ServerRequest.class);
-        service.putExtra("obj",typingObject);
+
+        TypingObject context=new TypingObject(Strings.AUTH, new NullObject());
+
+        //cyclingAsync.execute();
+
+        service=new Intent(this,ServerRequest.class);
+        service.putExtra(Strings.COMMAND, context);
         startService(service);
 
     }
+
 
     private void saveCreds(){
         prefEditor.putString("login",mail.getText().toString());
         prefEditor.putString("pass",pass.getText().toString());
         prefEditor.apply();
     }
+
+
+
 }

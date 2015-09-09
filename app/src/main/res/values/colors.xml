@@ -8,4 +8,9 @@
     <color name="colorTextDark">#ffffffff</color>
 
     <color name="colorInvisible">#00FFFFFF</color>
+
+    <color name="blue">#2124cb</color>
+    <color name="green">#00ad22</color>
+    <color name="yellow">#f9ff33</color>
+    <color name="red">#ff000e</color>
 </resources>

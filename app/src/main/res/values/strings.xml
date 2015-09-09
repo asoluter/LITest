@@ -2,7 +2,7 @@
     <string name="app_name">LITest</string>
     <string name="hello_world">Hello world!</string>
     <string name="app_font">fonts/DroidSansMono.ttf</string>
-    <string name="server_ip">diy-asolutworld.rhcloud.com</string>
+    <string name="loading">Loading</string>
 
     <!-- Menu -->
     <string name="action_settings">Settings</string>
@@ -13,6 +13,9 @@
     <string name="pass_label">Password</string>
     <string name="login_label">Login</string>
     <string name="signup_label">Sign up</string>
+
+    <string name="wrong_mail_pass">Wrong mail or password</string>
+    <string name="error_loading_data">Error loading data</string>
 
     <!-- Signup -->
 
@@ -26,5 +29,10 @@
     <string name="title_activity_settings">SettingsActivity</string>
     
 
+    <!-- Main -->
+
+    <string name="contest_pos">contest_pos</string>
+    <string name="test_pos">test_pos</string>
+    <string name="quest">quest</string>
 
 </resources>

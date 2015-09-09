@@ -1,17 +1,29 @@
 package com.asoluter.litest;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
-public class TestActivity extends ActionBarActivity {
+public class TestActivity extends AppCompatActivity {
+
+    private Toolbar toolbar;
+    TextView questText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
+        initToolbar();
+
+        questText=(TextView)findViewById(R.id.test_quest);
+
+        setQuest();
+        setAnsvers();
     }
 
     @Override
@@ -34,5 +46,32 @@ public class TestActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void initToolbar(){
+        toolbar=(Toolbar)findViewById(R.id.test_toolbar);
+
+        setSupportActionBar(toolbar);
+
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setTitle(R.string.app_name);
+        }
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
+
+        toolbar.inflateMenu(R.menu.menu_toolbar);
+    }
+
+    protected void setQuest(){
+        questText.setText(getIntent().getStringExtra(getString(R.string.quest)));
+    }
+
+    protected void setAnsvers(){
+
     }
 }

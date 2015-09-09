@@ -1,15 +1,23 @@
 package com.asoluter.litest.Services;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.IBinder;
 
-import com.asoluter.litest.LoginActivity;
 import com.asoluter.litest.Objects.AuthObject;
+import com.asoluter.litest.Objects.DataBase;
+import com.asoluter.litest.Objects.NullObject;
 import com.asoluter.litest.Objects.Strings;
 import com.asoluter.litest.Objects.TypingObject;
+import com.asoluter.litest.Services.Broadcasts.Broadcasts;
+import com.asoluter.litest.Services.Broadcasts.Events.LoginResultEvent;
+import com.asoluter.litest.Services.Broadcasts.Events.RefreshResultEvent;
+import com.asoluter.litest.Tests.Tests;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -24,10 +32,11 @@ public class ServerRequest extends Service {
 
     ExecutorService executorService;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
-        executorService= Executors.newFixedThreadPool(2);
+        executorService= Executors.newFixedThreadPool(3);
     }
 
     @Override
@@ -35,13 +44,12 @@ public class ServerRequest extends Service {
         super.onDestroy();
     }
 
-
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         MyAsync myAsync=new MyAsync();
-        myAsync.execute((TypingObject)intent.getSerializableExtra("obj"));
-
+        TypingObject type=(TypingObject)intent.getSerializableExtra(Strings.COMMAND);
+        myAsync.execute(type);
+        //myAsync.execute();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -59,8 +67,8 @@ public class ServerRequest extends Service {
         private  ObjectInputStream in;
         private  boolean online;
         TypingObject typingObject;
+        private SharedPreferences preferences;
 
-        BroadcastReceiver broadcastReceiver;
 
         @Override
         protected Void doInBackground(TypingObject... params) {
@@ -68,30 +76,55 @@ public class ServerRequest extends Service {
             runS();
             deBundle();
             stopS();
+            stopSelf();
             return null;
+        }
+
+
+
+        @Override
+        protected void onPreExecute() {
+            preferences=getSharedPreferences("login",MODE_PRIVATE);
         }
 
         private void deBundle(){
             switch (typingObject.getType()){
                 case Strings.AUTH:{
-                    login((AuthObject)typingObject.getObject());
+                    Intent intent=new Intent(Broadcasts.BROADCAST_LOGIN);
+                    
+                    intent.putExtra(Broadcasts.BROADCAST_LOGIN,new LoginResultEvent(login()));
+                    sendBroadcast(intent);
+                    //EventBus.getInstance().post(new LoginResultEvent(login()));
+                    break;
+                }
+                case Strings.REFRESH:{
+                    Intent intent=new Intent(Broadcasts.BROADCAST_REFRESH);
+                    intent.putExtra(Broadcasts.BROADCAST_REFRESH,new RefreshResultEvent(refresh()));
+                    sendBroadcast(intent);
+                    //EventBus.getInstance().post(new RefreshResultEvent(refresh()));
                     break;
                 }
                 case Strings.TEST:{
-                    login((AuthObject)typingObject.getObject());
+                    login();
                     break;
                 }
             }
         }
 
         private void runS(){
-
+            online=false;
             try {
-                SocketAddress socketAddress=new InetSocketAddress("192.168.1.7",8000);
-                //socket=new Socket("192.168.1.7",8080);
-                socket=new Socket();
-                online=true;
-                socket.connect(socketAddress,10000);
+                ConnectivityManager conManager=
+                        (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNet=conManager.getActiveNetworkInfo();
+                if(activeNet!=null){
+                    if(activeNet.isAvailable()){
+                        SocketAddress socketAddress=new InetSocketAddress("192.168.1.7",8000);
+                        socket=new Socket();
+                        online=true;
+                        socket.connect(socketAddress,10000);
+                    }
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -120,16 +153,19 @@ public class ServerRequest extends Service {
 
 
 
-        private void login(AuthObject authObject){
-            int res=0;
+        private boolean login(){
+
+            AuthObject authObject=new AuthObject(preferences.getString("login",""),preferences.getString("pass",""));
+            TypingObject typingObject=new TypingObject(Strings.AUTH,authObject);
 
             if(online) {
                 try {
-                    out.writeObject(new TypingObject(Strings.TEST,authObject));
+                    out.writeObject(typingObject);
 
                     try {
                         TypingObject ret=(TypingObject)in.readObject();
-                        if(ret.getType().equals(Strings.TEST))res=666;
+                        if(ret.getType().equals(Strings.OK))return true;
+                        else if(ret.getType().equals(Strings.ERROR))return false;
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -139,14 +175,30 @@ public class ServerRequest extends Service {
                     e.printStackTrace();
                 }
             }
-
-            Intent intent=new Intent(LoginActivity.BROADCAST_ACTION);
-            intent.putExtra(LoginActivity.RESULT,res);
-            sendBroadcast(intent);
+            return false;
         }
 
-        private void refresh(){
+        private boolean refresh(){
+            if(online){
+                try {
+                    out.writeObject(new TypingObject(Strings.REFRESH,new NullObject()));
+                    try {
+                        TypingObject ret=(TypingObject)in.readObject();
+                        ret.getType();
+                        if (ret.getType().equals(Strings.DATABASE)){
+                            DataBase data=(DataBase)ret.getObject();
+                            Tests.setDataBase(data);
 
+                            return true;
+                        }
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return false;
         }
     }
 

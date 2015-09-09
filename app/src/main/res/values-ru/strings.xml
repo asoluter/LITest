@@ -15,4 +15,8 @@
     <string name="name_label">Имя и фамилия</string>
     <string name="birth_label">Дата рождения</string>
     <string name="phone_label">Номер телефона</string>
+
+    <!-- Main -->
+
+    <string name="error_loading_data">Ошибка загрузки данных</string>
 </resources>
