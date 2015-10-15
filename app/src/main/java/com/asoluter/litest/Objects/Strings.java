@@ -15,6 +15,9 @@ public class Strings {
     public static final String TEST_RESULT="testRes";
     public static final String DATABASE="database";
 
+    public static final String ANSVERS="ansvers";
+    public static final String ANS_ID="ans_id";
+
 
 
 }

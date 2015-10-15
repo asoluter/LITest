@@ -79,15 +79,20 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 LoginResultEvent event=(LoginResultEvent)intent.getSerializableExtra(Broadcasts.BROADCAST_LOGIN);
-                if(event.getLogin()){
+                if(event.isConnected()){
+                    if(event.isLogin()){
+                        //cyclingAsync.stopCycling();
+                        Intent mainIntent=new Intent(LoginActivity.this,MainActivity.class);
+                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(mainIntent);
+                    } else {
+                        //cyclingAsync.stopCycling();
+                        Snackbar.make(pass,getString(R.string.wrong_mail_pass),Snackbar.LENGTH_LONG)
+                                .show();
+                    }
+                }else {
                     //cyclingAsync.stopCycling();
-                    Intent mainIntent=new Intent(LoginActivity.this,MainActivity.class);
-                    mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(mainIntent);
-                }
-                else {
-                    //cyclingAsync.stopCycling();
-                    Snackbar.make(pass,getString(R.string.wrong_mail_pass),Snackbar.LENGTH_INDEFINITE)
+                    Snackbar.make(pass,getString(R.string.no_connection),Snackbar.LENGTH_LONG)
                             .show();
                 }
             }

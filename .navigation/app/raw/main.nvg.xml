@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.asoluter.litest.MainActivity"/>
+      <point      
+        x = "40"      
+        y = "92"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.asoluter.litest.TestActivity"/>
+      <point      
+        x = "2480"      
+        y = "44"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.asoluter.litest.SignupActivity"/>
+      <point      
+        x = "3636"      
+        y = "56"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.asoluter.litest.LoginActivity"/>
+      <point      
+        x = "650"      
+        y = "250"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.asoluter.litest.SettingsActivity"/>
+      <point      
+        x = "2872"      
+        y = "496"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.asoluter.litest.ChooseTestActivity"/>
+      <point      
+        x = "1640"      
+        y = "532"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>

@@ -4,12 +4,17 @@ import java.io.Serializable;
 
 public class LoginResultEvent implements Serializable {
     private boolean loggedIn;
+    private boolean connected;
 
-    public LoginResultEvent(boolean loggedIn){
-        this.loggedIn=loggedIn;
+    public LoginResultEvent(boolean loggedIn,boolean connected){
+        this.loggedIn=loggedIn; this.connected=connected;
     }
 
-    public boolean getLogin(){
+    public boolean isLogin(){
         return loggedIn;
+    }
+
+    public boolean isConnected() {
+        return connected;
     }
 }

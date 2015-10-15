@@ -74,8 +74,16 @@ public class ServerRequest extends Service {
         protected Void doInBackground(TypingObject... params) {
             typingObject=params[0];
             runS();
-            deBundle();
-            stopS();
+            if(online){
+                deBundle();
+                stopS();
+            }
+            else {
+                Intent intent=new Intent(Broadcasts.BROADCAST_LOGIN);
+                intent.putExtra(Broadcasts.BROADCAST_LOGIN,new LoginResultEvent(false,false));
+                sendBroadcast(intent);
+            }
+
             stopSelf();
             return null;
         }
@@ -92,16 +100,16 @@ public class ServerRequest extends Service {
                 case Strings.AUTH:{
                     Intent intent=new Intent(Broadcasts.BROADCAST_LOGIN);
                     
-                    intent.putExtra(Broadcasts.BROADCAST_LOGIN,new LoginResultEvent(login()));
+                    intent.putExtra(Broadcasts.BROADCAST_LOGIN,new LoginResultEvent(login(),true));
                     sendBroadcast(intent);
-                    //EventBus.getInstance().post(new LoginResultEvent(login()));
+
                     break;
                 }
                 case Strings.REFRESH:{
                     Intent intent=new Intent(Broadcasts.BROADCAST_REFRESH);
                     intent.putExtra(Broadcasts.BROADCAST_REFRESH,new RefreshResultEvent(refresh()));
                     sendBroadcast(intent);
-                    //EventBus.getInstance().post(new RefreshResultEvent(refresh()));
+
                     break;
                 }
                 case Strings.TEST:{
@@ -122,7 +130,7 @@ public class ServerRequest extends Service {
                         SocketAddress socketAddress=new InetSocketAddress("192.168.1.7",8000);
                         socket=new Socket();
                         online=true;
-                        socket.connect(socketAddress,10000);
+                        socket.connect(socketAddress,5000);
                     }
                 }
 

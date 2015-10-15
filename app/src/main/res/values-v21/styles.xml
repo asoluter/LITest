@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:navigationBarColor">@color/navBarColor</item>
+    </style>
+</resources>
