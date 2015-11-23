@@ -1,19 +1,7 @@
 <resources>
-    <string name="app_name">LITest</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Налаштування</string>
-    <string name="title_activity_main_activity2">MainActivity2Activity</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_example">Example action</string>
-    <string name="title_activity_main_drawer">main_drawer</string>
     <string name="action_send">Відправити</string>
     <string name="ans_text">Ваш результат</string>
     <string name="birth_label">Дата народження</string>
@@ -33,4 +21,5 @@
     <string name="title_activity_settings">Налаштування</string>
     <string name="title_activity_signup">Зареєструватися</string>
     <string name="wrong_mail_pass">Неправильний логін або пароль</string>
+    <string name="title_activity_choose_test">Оберіть тест</string>
 </resources>

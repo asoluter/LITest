@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">LITest</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="app_font">fonts/DroidSansMono.ttf</string>
+    <string name="app_name" translatable="false">LITest</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
+    <string name="app_font" translatable="false">fonts/DroidSansMono.ttf</string>
     <string name="loading">Loading</string>
     <string name="invalid_result">Invalid result</string>
 
@@ -26,17 +26,17 @@
     <string name="birth_label">Birth date</string>
     <string name="phone_label">Phone</string>
     <string name="title_activity_choose_test">ChooseTestActivity</string>
-    <string name="title_activity_test">TestActivity</string>
-    <string name="title_activity_litest">LITest</string>
+    <string name="title_activity_test" translatable="false">TestActivity</string>
+    <string name="title_activity_litest" translatable="false">LITest</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="reg_not_ok">Something went wrong</string>
     
 
     <!-- Main -->
 
-    <string name="contest_pos">contest_pos</string>
-    <string name="test_pos">test_pos</string>
-    <string name="quest">quest</string>
+    <string name="contest_pos" translatable="false">contest_pos</string>
+    <string name="test_pos" translatable="false">test_pos</string>
+    <string name="quest" translatable="false">quest</string>
     <string name="action_send">Send</string>
     <string name="title_activity_ansver">Ansver</string>
     <string name="ans_text">Your result</string>
