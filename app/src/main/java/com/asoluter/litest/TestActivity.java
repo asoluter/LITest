@@ -1,6 +1,9 @@
 package com.asoluter.litest;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.asoluter.litest.Objects.Strings;
+import com.asoluter.litest.Services.DBHelper.DBHelper;
 import com.asoluter.litest.Tests.TestsCover;
 
 import java.util.ArrayList;
@@ -25,6 +29,8 @@ public class TestActivity extends AppCompatActivity {
     private ArrayList<RadioButton> radioButtons;
     private TextView questText;
     private LinearLayout chooseLayout;
+    private SQLiteDatabase database;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,10 @@ public class TestActivity extends AppCompatActivity {
 
         setQuest();
         setAnsvers();
+        database=new DBHelper(this).getWritableDatabase();
+        preferences=getSharedPreferences("login", MODE_PRIVATE);
+
+        toggleChecked();
     }
 
     @Override
@@ -54,9 +64,6 @@ public class TestActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -116,6 +123,22 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
+    private void toggleChecked(){
+        String toggledButton="select ans_id from ansvers where ((user=?)and(cont_id=?)and(test_id=?))";
+
+        int cont_id=getIntent().getIntExtra(getString(R.string.contest_pos), -1);
+        int test_id=getIntent().getIntExtra(getString(R.string.test_pos),-1);
+        Cursor cursor=database.rawQuery(toggledButton,new String[]{preferences.getString("login",""),
+                String.valueOf(cont_id),String.valueOf(test_id)});
+        if(cursor.getCount()!=0){
+            cursor.moveToFirst();
+            int toggled=cursor.getInt(0);
+            toggleRadioButton(toggled);
+        }
+
+
+    }
+
     private void toggleRadioButton(int n){
         for (int i=0;i<radioButtons.size();i++){
             radioButtons.get(i).setChecked(false);
@@ -129,10 +152,19 @@ public class TestActivity extends AppCompatActivity {
                 dp,r.getDisplayMetrics());
     }
 
+    private final String ADD_U_ANSVER="insert or replace into ansvers values (?,?,?,?);";
     private View.OnClickListener onClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             toggleRadioButton((int)v.getTag());
+            int cont_id=getIntent().getIntExtra(getString(R.string.contest_pos), -1);
+            int test_id=getIntent().getIntExtra(getString(R.string.test_pos),-1);
+            int ans_id=(int)v.getTag();
+
+
+            database.execSQL(ADD_U_ANSVER,new String[]{preferences.getString("login",""),
+                    String.valueOf(cont_id),String.valueOf(test_id),String.valueOf(ans_id)});
+
         }
     };
 }

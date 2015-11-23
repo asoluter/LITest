@@ -9,11 +9,15 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.IBinder;
 
+import com.asoluter.litest.Objects.AnsObject;
 import com.asoluter.litest.Objects.AuthObject;
 import com.asoluter.litest.Objects.DataBase;
 import com.asoluter.litest.Objects.NullObject;
+import com.asoluter.litest.Objects.Pair;
+import com.asoluter.litest.Objects.RegData;
 import com.asoluter.litest.Objects.Strings;
 import com.asoluter.litest.Objects.TypingObject;
+import com.asoluter.litest.R;
 import com.asoluter.litest.Services.Broadcasts.Broadcasts;
 import com.asoluter.litest.Services.Broadcasts.Events.LoginResultEvent;
 import com.asoluter.litest.Services.Broadcasts.Events.RefreshResultEvent;
@@ -25,6 +29,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -113,11 +118,25 @@ public class ServerRequest extends Service {
                     break;
                 }
                 case Strings.TEST:{
-                    login();
+                    //if(login()){
+                        int result=sendAnsvers();
+
+                        Intent intent=new Intent(Broadcasts.BROADCAST_ANSVER);
+                        if(result==-1)intent.putExtra(Strings.TEST_RESULT,getString(R.string.invalid_result));
+                        else intent.putExtra(Strings.TEST_RESULT,String.valueOf(result));
+                        sendBroadcast(intent);
+                    //}
+                    break;
+                }
+                case Strings.REGISTER:{
+                    Intent intent=new Intent(Broadcasts.BROADCAST_REGISTER);
+                    intent.putExtra(Broadcasts.RESULT,regResult());
+                    sendBroadcast(intent);
                     break;
                 }
             }
         }
+
 
         private void runS(){
             online=false;
@@ -146,7 +165,7 @@ public class ServerRequest extends Service {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
+            }else stopSelf();
 
         }
 
@@ -159,7 +178,35 @@ public class ServerRequest extends Service {
             }
         }
 
+        private int sendAnsvers(){
 
+            if(online){
+                try {
+                    out.writeObject(typingObject);
+                    TypingObject ret=(TypingObject)in.readObject();
+                    if(ret.getType().equals(Strings.TEST_RESULT)){
+                        return (int)ret.getObject();
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            return -1;
+        }
+
+        private int regResult(){
+            if(online){
+                try {
+                    out.writeObject(typingObject);
+                    TypingObject ret=(TypingObject)in.readObject();
+                    if(ret.getType().equals(Strings.OK))return 0;
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return -1;
+        }
 
         private boolean login(){
 
@@ -172,7 +219,10 @@ public class ServerRequest extends Service {
 
                     try {
                         TypingObject ret=(TypingObject)in.readObject();
-                        if(ret.getType().equals(Strings.OK))return true;
+                        if(ret.getType().equals(Strings.OK)){
+
+                            return true;
+                        }
                         else if(ret.getType().equals(Strings.ERROR))return false;
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();

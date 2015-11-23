@@ -4,7 +4,6 @@
 
     <!-- Login -->
     <string name="title_activity_login">Войти</string>
-    <string name="mail_label">Email</string>
     <string name="pass_label">Пароль</string>
     <string name="login_label">Логин</string>
     <string name="signup_label">Регистрация</string>
@@ -19,4 +18,15 @@
     <!-- Main -->
 
     <string name="error_loading_data">Ошибка загрузки данных</string>
+    <string name="action_send">Отправить</string>
+    <string name="ans_text">Ваш результат</string>
+    <string name="invalid_result">Ошибка результата</string>
+    <string name="loading">Загрузка</string>
+    <string name="no_connection">Отсутствует соединение</string>
+    <string name="reg_not_ok">Что-то пошло не так</string>
+    <string name="tests">Выберите тест</string>
+    <string name="title_activity_ansver">Ответ</string>
+    <string name="title_activity_choose_test"></string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="wrong_mail_pass">Неправильный логін или пароль</string>
 </resources>

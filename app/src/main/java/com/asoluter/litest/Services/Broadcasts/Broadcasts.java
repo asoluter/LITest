@@ -6,6 +6,8 @@ public class Broadcasts {
 
     public static final String BROADCAST_LOGIN="login_service";
     public static final String BROADCAST_REFRESH="refresh_service";
+    public static final String BROADCAST_ANSVER="ansver_service";
+    public static final String BROADCAST_REGISTER="reg_service";
 
     public static final String BROADCAST_LOGIN_RESULT ="login_service_result";
     public static final String BROADCAST_REFRESH_RESULT ="refresh_service_result";

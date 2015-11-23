@@ -10,6 +10,8 @@ public class Strings {
     public static final String AUTH="auth";
     public static final String REGISTER="reg";
     public static final String REFRESH="refresh";
+    public static final String PAIR="pair";
+    public static final String REG_RESULT="reg_result";
 
     public static final String TEST="test";
     public static final String TEST_RESULT="testRes";

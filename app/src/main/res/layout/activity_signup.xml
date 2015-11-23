@@ -88,10 +88,12 @@
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/birth_label"
-                    android:inputType="date"
                     android:ems="10"
                     android:id="@+id/birthText"
-                    android:layout_marginBottom="4dp" />
+                    android:layout_marginBottom="4dp"
+                    android:focusable="false"
+                    android:editable="true"
+                    android:clickable="true" />
 
                 <Button
                     android:layout_width="280dp"

@@ -68,6 +68,10 @@ public class LoginActivity extends AppCompatActivity {
         loginButton=(Button)findViewById(R.id.loginButton);
         signupButton=(Button)findViewById(R.id.signupButon);
 
+
+        mail.setText(getSharedPreferences("login", MODE_PRIVATE).getString("login", ""));
+        pass.setText(getSharedPreferences("login",MODE_PRIVATE).getString("pass",""));
+
         initToolbar();
 
         cyclingAsync=new CyclingAsync(this);
@@ -149,13 +153,12 @@ public class LoginActivity extends AppCompatActivity {
 
         saveCreds();
 
-
-        TypingObject context=new TypingObject(Strings.AUTH, new NullObject());
+        TypingObject typingObject=new TypingObject(Strings.AUTH, new NullObject());
 
         //cyclingAsync.execute();
 
         service=new Intent(this,ServerRequest.class);
-        service.putExtra(Strings.COMMAND, context);
+        service.putExtra(Strings.COMMAND, typingObject);
         startService(service);
 
     }

@@ -3,18 +3,19 @@
     <string name="hello_world">Hello world!</string>
     <string name="app_font">fonts/DroidSansMono.ttf</string>
     <string name="loading">Loading</string>
+    <string name="invalid_result">Invalid result</string>
 
     <!-- Menu -->
     <string name="action_settings">Settings</string>
 
     <!-- Login -->
     <string name="title_activity_login">Login</string>
-    <string name="mail_label">Email</string>
+    <string name="mail_label" translatable="false">Email</string>
     <string name="pass_label">Password</string>
     <string name="login_label">Login</string>
     <string name="signup_label">Sign up</string>
 
-    <string name="wrong_mail_pass">Wrong mail or password</string>
+    <string name="wrong_mail_pass">Wrong login or password</string>
     <string name="no_connection">No connection</string>
     <string name="error_loading_data">Error loading data</string>
 
@@ -28,6 +29,7 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_litest">LITest</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="reg_not_ok">Something went wrong</string>
     
 
     <!-- Main -->
@@ -35,7 +37,9 @@
     <string name="contest_pos">contest_pos</string>
     <string name="test_pos">test_pos</string>
     <string name="quest">quest</string>
-
-
+    <string name="action_send">Send</string>
+    <string name="title_activity_ansver">Ansver</string>
+    <string name="ans_text">Your result</string>
+    <string name="tests">Choose test</string>
 
 </resources>

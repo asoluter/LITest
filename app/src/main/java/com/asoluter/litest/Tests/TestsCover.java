@@ -15,6 +15,7 @@ public class TestsCover {
 
 
 
+
     public static ArrayList<String> getContests(){
 
         return Tests.getDataBase().getCont_name();
@@ -22,8 +23,8 @@ public class TestsCover {
 
     public static ArrayList<String> getTests(int contestPosition){
         ArrayList<String> tests=new ArrayList<String>();
-        test_id=new ArrayList<Integer>();
-        quests=new ArrayList<String>();
+        test_id=new ArrayList<>();
+        quests=new ArrayList<>();
 
         for(int i=0;i<Tests.getDataBase().getTest_cont_id().size();i++){
             if(Tests.getDataBase().getTest_cont_id().get(i)
@@ -38,8 +39,8 @@ public class TestsCover {
     }
 
     public static Bundle getAnsvers(int testPosition){
-        ArrayList<String> ansvers=new ArrayList<String>();
-        ArrayList<Integer> ans_id=new ArrayList<Integer>();
+        ArrayList<String> ansvers=new ArrayList<>();
+        ArrayList<Integer> ans_id=new ArrayList<>();
 
         for(int i=0;i<Tests.getDataBase().getAns_test_id().size();i++){
             if(Tests.getDataBase().getAns_test_id().get(i)
@@ -54,4 +55,6 @@ public class TestsCover {
         bundle.putIntegerArrayList(Strings.ANS_ID,ans_id);
         return bundle;
     }
+
+
 }
