@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.asoluter.litest.Objects.Strings;
 import com.asoluter.litest.Services.DBHelper.DBHelper;
+import com.asoluter.litest.Tests.Tests;
 import com.asoluter.litest.Tests.TestsCover;
 
 import java.util.ArrayList;
@@ -74,7 +75,8 @@ public class TestActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if(getSupportActionBar()!=null){
-            getSupportActionBar().setTitle(R.string.app_name);
+            int test_id=getIntent().getIntExtra(getString(R.string.test_pos),-1);
+            getSupportActionBar().setTitle(getIntent().getStringExtra("test_name"));
         }
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -106,8 +108,8 @@ public class TestActivity extends AppCompatActivity {
             for(int i=0;i<ans_id_size;i++){
                 LinearLayout card=(LinearLayout)inflater.inflate(R.layout.merge_ansver_card,null);
                 RadioButton radio=(RadioButton)card.findViewById(R.id.radio_ans);
-                radio.setTag(i);
-                card.setTag(i);
+                radio.setTag(ans_id.get(i));
+                card.setTag(ans_id.get(i));
                 TextView ans_text=(TextView)card.findViewById(R.id.text_ans);
                 ans_text.setText(ansvers.get(i));
 
@@ -133,6 +135,7 @@ public class TestActivity extends AppCompatActivity {
         if(cursor.getCount()!=0){
             cursor.moveToFirst();
             int toggled=cursor.getInt(0);
+
             toggleRadioButton(toggled);
         }
 
@@ -142,8 +145,9 @@ public class TestActivity extends AppCompatActivity {
     private void toggleRadioButton(int n){
         for (int i=0;i<radioButtons.size();i++){
             radioButtons.get(i).setChecked(false);
+            if(((int)radioButtons.get(i).getTag())==n)radioButtons.get(i).setChecked(true);
         }
-        radioButtons.get(n).setChecked(true);
+
     }
 
     private int dpToInt(int dp){
@@ -158,7 +162,7 @@ public class TestActivity extends AppCompatActivity {
         public void onClick(View v) {
             toggleRadioButton((int)v.getTag());
             int cont_id=getIntent().getIntExtra(getString(R.string.contest_pos), -1);
-            int test_id=getIntent().getIntExtra(getString(R.string.test_pos),-1);
+            int test_id=getIntent().getIntExtra(getString(R.string.test_pos), -1);
             int ans_id=(int)v.getTag();
 
 

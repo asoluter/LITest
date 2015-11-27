@@ -7,13 +7,13 @@ import com.asoluter.litest.Objects.Strings;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class TestsCover {
     public static ArrayList<Integer> cont_id;
     public static ArrayList<Integer> test_id;
     public static ArrayList<String> quests;
-
-
 
 
     public static ArrayList<String> getContests(){
@@ -28,7 +28,7 @@ public class TestsCover {
 
         for(int i=0;i<Tests.getDataBase().getTest_cont_id().size();i++){
             if(Tests.getDataBase().getTest_cont_id().get(i)
-                    .equals(Tests.getDataBase().getCont_cont_id().get(contestPosition))){
+                    .equals(Tests.getDataBase().getCont_cont_id().get(contestPosition-1))){
                 test_id.add(Tests.getDataBase().getTest_test_id().get(i));
                 tests.add(Tests.getDataBase().getTest_name().get(i));
                 quests.add(Tests.getDataBase().getTest_quest().get(i));
@@ -49,6 +49,9 @@ public class TestsCover {
                 ansvers.add(Tests.getDataBase().getAns_text().get(i));
             }
         }
+
+        Collections.reverse(ans_id);
+        Collections.reverse(ansvers);
 
         Bundle bundle=new Bundle();
         bundle.putStringArrayList(Strings.ANSVERS,ansvers );

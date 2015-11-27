@@ -24,6 +24,7 @@ import com.asoluter.litest.Objects.TypingObject;
 import com.asoluter.litest.Services.Broadcasts.Broadcasts;
 import com.asoluter.litest.Services.DBHelper.DBHelper;
 import com.asoluter.litest.Services.ServerRequest;
+import com.asoluter.litest.Tests.Tests;
 import com.asoluter.litest.Tests.TestsCover;
 
 import java.util.ArrayList;
@@ -84,9 +85,10 @@ public class ChooseTestActivity extends AppCompatActivity {
     }
 
     protected void setTests(int position){
-        dataAdapter=new ArrayAdapter<String>(getApplicationContext(),
+        final ArrayList<String> tests=TestsCover.getTests(position);
+        dataAdapter=new ArrayAdapter<>(getApplicationContext(),
                 R.layout.contest_list,
-                TestsCover.getTests(position));
+                tests);
         cont_pos=position;
         chooseList.setAdapter(dataAdapter);
 
@@ -98,6 +100,7 @@ public class ChooseTestActivity extends AppCompatActivity {
                 testStart.putExtra(getString(R.string.contest_pos), cont_pos);
                 testStart.putExtra(getString(R.string.quest),
                         TestsCover.quests.get(position));
+                testStart.putExtra("test_name",tests.get(position));
                 startActivity(testStart);
             }
         });
@@ -131,7 +134,10 @@ public class ChooseTestActivity extends AppCompatActivity {
                         ArrayList<AnsObject> ansvers=new ArrayList<>();
                         if (cursor.getCount()>0)
                         do{
-                            ansvers.add(new AnsObject(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2)));
+                            if(cursor.getInt(0)>=0&&cursor.getInt(1)>=0&&cursor.getInt(2)>=0)
+                            ansvers.add(new AnsObject(cursor.getInt(0),
+                                    Tests.getTestIdFromContest(cursor.getInt(1), cursor.getInt(0)),
+                                    cursor.getInt(2)));
                         }while (cursor.moveToNext());
 
                         cursor.close();

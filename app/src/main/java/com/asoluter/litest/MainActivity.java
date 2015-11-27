@@ -21,6 +21,7 @@ import com.asoluter.litest.Objects.TypingObject;
 import com.asoluter.litest.Services.Broadcasts.Broadcasts;
 import com.asoluter.litest.Services.Broadcasts.Events.RefreshResultEvent;
 import com.asoluter.litest.Services.ServerRequest;
+import com.asoluter.litest.Tests.Tests;
 import com.asoluter.litest.Tests.TestsCover;
 
 
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent testsStart = new Intent(context, ChooseTestActivity.class);
-                    testsStart.putExtra(getString(R.string.contest_pos), position);
+                    testsStart.putExtra(getString(R.string.contest_pos), Tests.getDataBase().getCont_cont_id().get(position));
                     startActivity(testsStart);
                 }
             });
