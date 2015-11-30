@@ -119,7 +119,7 @@ public class ServerRequest extends Service {
                 }
                 case Strings.TEST:{
                     //if(login()){
-                        int result=sendAnsvers();
+                        int result=sendAnsvers()*5;
 
                         Intent intent=new Intent(Broadcasts.BROADCAST_ANSVER);
                         if(result==-1)intent.putExtra(Strings.TEST_RESULT,getString(R.string.invalid_result));
@@ -146,6 +146,8 @@ public class ServerRequest extends Service {
                 NetworkInfo activeNet=conManager.getActiveNetworkInfo();
                 if(activeNet!=null){
                     if(activeNet.isAvailable()){
+                        //TODO:CHANGE IP IF NEEDED
+                        //SocketAddress socketAddress=new InetSocketAddress("192.168.1.7",8000);
                         SocketAddress socketAddress=new InetSocketAddress("192.168.1.7",8000);
                         socket=new Socket();
                         online=true;

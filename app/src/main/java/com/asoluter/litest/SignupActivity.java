@@ -32,12 +32,13 @@ import java.util.Locale;
 
 public class SignupActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
-    TextView nameText;
-    TextView loginText;
-    TextView passText;
-    TextView mailText;
-    TextView birthText;
+    private Toolbar toolbar;
+    private TextView nameText;
+    private TextView loginText;
+    private TextView passText;
+    private TextView mailText;
+    private TextView birthText;
+    private Button signUpButton;
 
     private SimpleDateFormat dateFormat;
     private DatePickerDialog datePickerDialog;
@@ -50,7 +51,8 @@ public class SignupActivity extends AppCompatActivity {
 
         initToolbar();
 
-        final Button signUpButton=(Button)findViewById(R.id.signupButon);
+        signUpButton=(Button)findViewById(R.id.signupButon);
+
         nameText=(TextView)findViewById(R.id.nameText);
         loginText=(TextView)findViewById(R.id.loginText);
         passText=(TextView)findViewById(R.id.passLoginText);
@@ -83,6 +85,7 @@ public class SignupActivity extends AppCompatActivity {
         BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                signUpButton.setEnabled(true);
                 if(intent.getIntExtra(Broadcasts.RESULT,-1)==0){
                     Intent mainIntent=new Intent(SignupActivity.this,MainActivity.class);
                     mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -96,6 +99,7 @@ public class SignupActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                signUpButton.setEnabled(false);
                 TypingObject typingObject=new TypingObject(Strings.REGISTER,new RegData(nameText.getText().toString(),
                         loginText.getText().toString(),passText.getText().toString(),
                         mailText.getText().toString(),date));

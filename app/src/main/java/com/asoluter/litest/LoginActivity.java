@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         broadcastReceiver=new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                loginButton.setEnabled(true);
                 LoginResultEvent event=(LoginResultEvent)intent.getSerializableExtra(Broadcasts.BROADCAST_LOGIN);
                 if(event.isConnected()){
                     if(event.isLogin()){
@@ -150,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onLogin(){
-
+        loginButton.setEnabled(false);
         saveCreds();
 
         TypingObject typingObject=new TypingObject(Strings.AUTH, new NullObject());
