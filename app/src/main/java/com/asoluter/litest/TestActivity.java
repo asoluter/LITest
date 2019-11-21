@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.asoluter.litest.Objects.Strings;
 import com.asoluter.litest.Services.DBHelper.DBHelper;
-import com.asoluter.litest.Tests.Tests;
 import com.asoluter.litest.Tests.TestsCover;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class TestActivity extends AppCompatActivity {
 
         initToolbar();
 
-        questText=(TextView)findViewById(R.id.quest_text);
+        questText= findViewById(R.id.quest_text);
 
         setQuest();
         setAnsvers();
@@ -70,21 +69,16 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void initToolbar(){
-        toolbar=(Toolbar)findViewById(R.id.test_toolbar);
+        toolbar = findViewById(R.id.test_toolbar);
 
         setSupportActionBar(toolbar);
 
         if(getSupportActionBar()!=null){
-            int test_id=getIntent().getIntExtra(getString(R.string.test_pos),-1);
+            int test_id = getIntent().getIntExtra(getString(R.string.test_pos),-1);
             getSupportActionBar().setTitle(getIntent().getStringExtra("test_name"));
         }
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });
+        toolbar.setOnMenuItemClickListener(item -> false);
 
         toolbar.inflateMenu(R.menu.menu_toolbar);
     }
@@ -100,17 +94,17 @@ public class TestActivity extends AppCompatActivity {
         ArrayList<Integer> ans_id=ansBundle.getIntegerArrayList(Strings.ANS_ID);
         radioButtons=new ArrayList<>();
 
-        chooseLayout=(LinearLayout)findViewById(R.id.choose_test_list);
+        chooseLayout = findViewById(R.id.choose_test_list);
         LayoutInflater inflater=(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 
         if (ans_id != null&&ansvers!=null) {
             int ans_id_size=ans_id.size();
             for(int i=0;i<ans_id_size;i++){
                 LinearLayout card=(LinearLayout)inflater.inflate(R.layout.merge_ansver_card,null);
-                RadioButton radio=(RadioButton)card.findViewById(R.id.radio_ans);
+                RadioButton radio = card.findViewById(R.id.radio_ans);
                 radio.setTag(ans_id.get(i));
                 card.setTag(ans_id.get(i));
-                TextView ans_text=(TextView)card.findViewById(R.id.text_ans);
+                TextView ans_text = card.findViewById(R.id.text_ans);
                 ans_text.setText(ansvers.get(i));
 
                 radio.setOnClickListener(onClickListener);
@@ -138,8 +132,7 @@ public class TestActivity extends AppCompatActivity {
 
             toggleRadioButton(toggled);
         }
-
-
+        cursor.close();
     }
 
     private void toggleRadioButton(int n){

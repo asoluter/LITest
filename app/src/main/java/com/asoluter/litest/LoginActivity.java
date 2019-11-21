@@ -62,11 +62,11 @@ public class LoginActivity extends AppCompatActivity {
         preferences=getSharedPreferences("login", MODE_PRIVATE);
         prefEditor=preferences.edit();
 
-        title=(TextView)findViewById(R.id.titleLoginView);
-        mail=(EditText)findViewById(R.id.mailLoginText);
-        pass=(EditText)findViewById(R.id.passLoginText);
-        loginButton=(Button)findViewById(R.id.loginButton);
-        signupButton=(Button)findViewById(R.id.signupButon);
+        title = findViewById(R.id.titleLoginView);
+        mail = findViewById(R.id.mailLoginText);
+        pass = findViewById(R.id.passLoginText);
+        loginButton = findViewById(R.id.loginButton);
+        signupButton = findViewById(R.id.signupButon);
 
 
         mail.setText(getSharedPreferences("login", MODE_PRIVATE).getString("login", ""));
@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     protected void initToolbar(){
-        toolbar=(Toolbar)findViewById(R.id.login_toolbar);
+        toolbar = findViewById(R.id.login_toolbar);
 
         setSupportActionBar(toolbar);
 
@@ -116,28 +116,20 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(null);
         }
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });
+        toolbar.setOnMenuItemClickListener(item -> false);
 
         toolbar.inflateMenu(R.menu.menu_login);
     }
 
-    private View.OnClickListener onClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.loginButton:{
-                    onLogin();
-                    break;
-                }
-                case R.id.signupButon:{
-                    onSignup();
-                    break;
-                }
+    private View.OnClickListener onClickListener= v -> {
+        switch (v.getId()){
+            case R.id.loginButton:{
+                onLogin();
+                break;
+            }
+            case R.id.signupButon:{
+                onSignup();
+                break;
             }
         }
     };

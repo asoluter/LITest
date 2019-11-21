@@ -3,7 +3,6 @@
     package="com.asoluter.litest" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -62,7 +61,7 @@
                 android:value="com.asoluter.litest.MainActivity" />
         </activity>
         <activity
-            android:name=".AnsverActivity"
+            android:name=".AnswerActivity"
             android:label="@string/title_activity_ansver"
 
             android:theme="@style/AppTheme" >

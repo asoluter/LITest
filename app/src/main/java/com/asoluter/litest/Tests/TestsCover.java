@@ -4,10 +4,7 @@ import android.os.Bundle;
 
 import com.asoluter.litest.Objects.Strings;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class TestsCover {
@@ -22,7 +19,7 @@ public class TestsCover {
     }
 
     public static ArrayList<String> getTests(int contestPosition){
-        ArrayList<String> tests=new ArrayList<String>();
+        ArrayList<String> tests= new ArrayList<>();
         test_id=new ArrayList<>();
         quests=new ArrayList<>();
 

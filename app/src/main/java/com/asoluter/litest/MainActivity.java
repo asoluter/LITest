@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         context=this;
 
         initToolbar();
-        refreshLayout=(SwipeRefreshLayout)findViewById(R.id.mainRefreshLayout);
-        contestList=(ListView)findViewById(R.id.contestList);
+        refreshLayout = findViewById(R.id.mainRefreshLayout);
+        contestList = findViewById(R.id.contestList);
 
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setColorSchemeResources(R.color.blue,
@@ -68,19 +68,16 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     public void refreshResult(RefreshResultEvent event){
         if (event.getStatus()){
 
-            dataAdapter= new ArrayAdapter<String>(getApplicationContext(),
+            dataAdapter= new ArrayAdapter<>(getApplicationContext(),
                     R.layout.contest_list,
                     TestsCover.getContests());
 
             contestList.setAdapter(dataAdapter);
 
-            contestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent testsStart = new Intent(context, ChooseTestActivity.class);
-                    testsStart.putExtra(getString(R.string.contest_pos), Tests.getDataBase().getCont_cont_id().get(position));
-                    startActivity(testsStart);
-                }
+            contestList.setOnItemClickListener((parent, view, position, id) -> {
+                Intent testsStart = new Intent(context, ChooseTestActivity.class);
+                testsStart.putExtra(getString(R.string.contest_pos), Tests.getDataBase().getCont_cont_id().get(position));
+                startActivity(testsStart);
             });
 
             refreshLayout.setRefreshing(false);
@@ -91,16 +88,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     protected void initToolbar(){
-        toolbar=(Toolbar)findViewById(R.id.main_toolbar);
+        toolbar = findViewById(R.id.main_toolbar);
         
         toolbar.setTitle(R.string.app_name);
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });
+        toolbar.setOnMenuItemClickListener(item -> false);
 
         toolbar.inflateMenu(R.menu.menu_toolbar);
     }

@@ -9,12 +9,9 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.IBinder;
 
-import com.asoluter.litest.Objects.AnsObject;
 import com.asoluter.litest.Objects.AuthObject;
 import com.asoluter.litest.Objects.DataBase;
 import com.asoluter.litest.Objects.NullObject;
-import com.asoluter.litest.Objects.Pair;
-import com.asoluter.litest.Objects.RegData;
 import com.asoluter.litest.Objects.Strings;
 import com.asoluter.litest.Objects.TypingObject;
 import com.asoluter.litest.R;
@@ -29,7 +26,6 @@ import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -244,7 +240,6 @@ public class ServerRequest extends Service {
                     out.writeObject(new TypingObject(Strings.REFRESH,new NullObject()));
                     try {
                         TypingObject ret=(TypingObject)in.readObject();
-                        ret.getType();
                         if (ret.getType().equals(Strings.DATABASE)){
                             DataBase data=(DataBase)ret.getObject();
                             Tests.setDataBase(data);

@@ -1,17 +1,14 @@
 package com.asoluter.litest;
 
 import android.app.DatePickerDialog;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -51,13 +48,13 @@ public class SignupActivity extends AppCompatActivity {
 
         initToolbar();
 
-        signUpButton=(Button)findViewById(R.id.signupButon);
+        signUpButton = findViewById(R.id.signupButon);
 
-        nameText=(TextView)findViewById(R.id.nameText);
-        loginText=(TextView)findViewById(R.id.loginText);
-        passText=(TextView)findViewById(R.id.passLoginText);
-        mailText=(TextView)findViewById(R.id.mailLoginText);
-        birthText=(TextView)findViewById(R.id.birthText);
+        nameText = findViewById(R.id.nameText);
+        loginText = findViewById(R.id.loginText);
+        passText = findViewById(R.id.passLoginText);
+        mailText = findViewById(R.id.mailLoginText);
+        birthText = findViewById(R.id.birthText);
 
         loginText.setText(getSharedPreferences("login", MODE_PRIVATE).getString("login", ""));
         passText.setText(getSharedPreferences("login",MODE_PRIVATE).getString("pass",""));
@@ -65,22 +62,14 @@ public class SignupActivity extends AppCompatActivity {
 
         Calendar calendar=Calendar.getInstance();
         dateFormat=new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        datePickerDialog=new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate=Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                birthText.setText(dateFormat.format(newDate.getTime()));
-                date=new Date(newDate.getTime().getTime());
-            }
+        datePickerDialog=new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate=Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            birthText.setText(dateFormat.format(newDate.getTime()));
+            date=new Date(newDate.getTime().getTime());
         },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
 
-        birthText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePickerDialog.show();
-            }
-        });
+        birthText.setOnClickListener(v -> datePickerDialog.show());
 
         BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
             @Override
@@ -96,22 +85,19 @@ public class SignupActivity extends AppCompatActivity {
         IntentFilter filter=new IntentFilter(Broadcasts.BROADCAST_REGISTER);
         registerReceiver(broadcastReceiver,filter);
 
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signUpButton.setEnabled(false);
-                TypingObject typingObject=new TypingObject(Strings.REGISTER,new RegData(nameText.getText().toString(),
-                        loginText.getText().toString(),passText.getText().toString(),
-                        mailText.getText().toString(),date));
-                Intent service=new Intent(SignupActivity.this, ServerRequest.class);
-                service.putExtra(Strings.COMMAND,typingObject);
-                startService(service);
-            }
+        signUpButton.setOnClickListener(v -> {
+            signUpButton.setEnabled(false);
+            TypingObject typingObject=new TypingObject(Strings.REGISTER,new RegData(nameText.getText().toString(),
+                    loginText.getText().toString(),passText.getText().toString(),
+                    mailText.getText().toString(),date));
+            Intent service=new Intent(SignupActivity.this, ServerRequest.class);
+            service.putExtra(Strings.COMMAND,typingObject);
+            startService(service);
         });
     }
 
     protected void initToolbar(){
-        toolbar=(Toolbar)findViewById(R.id.signup_toolbar);
+        toolbar = findViewById(R.id.signup_toolbar);
 
         setSupportActionBar(toolbar);
 
@@ -120,12 +106,7 @@ public class SignupActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });
+        toolbar.setOnMenuItemClickListener(item -> false);
 
         toolbar.inflateMenu(R.menu.menu_signup);
     }

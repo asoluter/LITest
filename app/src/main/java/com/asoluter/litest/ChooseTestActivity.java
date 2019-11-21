@@ -46,7 +46,7 @@ public class ChooseTestActivity extends AppCompatActivity {
 
         initToolbar();
 
-        chooseList=(ListView)findViewById(R.id.choose_test_list);
+        chooseList = findViewById(R.id.choose_test_list);
 
         setTests(getIntent().getIntExtra(
                 getString(R.string.contest_pos),0));
@@ -55,7 +55,7 @@ public class ChooseTestActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                Intent ansIntent=new Intent(contextt,AnsverActivity.class);
+                Intent ansIntent=new Intent(contextt, AnswerActivity.class);
                 ansIntent.putExtra(Strings.TEST_RESULT,intent.getStringExtra(Strings.TEST_RESULT));
                 startActivity(ansIntent);
             }
@@ -92,24 +92,21 @@ public class ChooseTestActivity extends AppCompatActivity {
         cont_pos=position;
         chooseList.setAdapter(dataAdapter);
 
-        chooseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent testStart=new Intent(contextt,TestActivity.class);
-                testStart.putExtra(getString(R.string.test_pos), position);
-                testStart.putExtra(getString(R.string.contest_pos), cont_pos);
-                testStart.putExtra(getString(R.string.quest),
-                        TestsCover.quests.get(position));
-                testStart.putExtra("test_name",tests.get(position));
-                startActivity(testStart);
-            }
+        chooseList.setOnItemClickListener((parent, view, position1, id) -> {
+            Intent testStart=new Intent(contextt,TestActivity.class);
+            testStart.putExtra(getString(R.string.test_pos), position1);
+            testStart.putExtra(getString(R.string.contest_pos), cont_pos);
+            testStart.putExtra(getString(R.string.quest),
+                    TestsCover.quests.get(position1));
+            testStart.putExtra("test_name",tests.get(position1));
+            startActivity(testStart);
         });
     }
 
     private static final String GET_ANSVERS="select cont_id,test_id,ans_id from ansvers where ((user=?)and(cont_id=?))";
 
     protected void initToolbar(){
-        toolbar=(Toolbar)findViewById(R.id.choose_test_toolbar);
+        toolbar = findViewById(R.id.choose_test_toolbar);
 
         setSupportActionBar(toolbar);
 
@@ -118,40 +115,37 @@ public class ChooseTestActivity extends AppCompatActivity {
 
         }
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.action_send:{
-                        SQLiteDatabase database=new DBHelper(contextt).getReadableDatabase();
+        toolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()){
+                case R.id.action_send:{
+                    SQLiteDatabase database=new DBHelper(contextt).getReadableDatabase();
 
-                        String login=getSharedPreferences("login",MODE_PRIVATE).getString("login", "");
-                        AuthObject auth_obj=new AuthObject(login,getSharedPreferences("login",MODE_PRIVATE).getString("pass",""));
+                    String login=getSharedPreferences("login",MODE_PRIVATE).getString("login", "");
+                    AuthObject auth_obj=new AuthObject(login,getSharedPreferences("login",MODE_PRIVATE).getString("pass",""));
 
-                        Cursor cursor=database.rawQuery(GET_ANSVERS, new String[]{login, String.valueOf(cont_pos)});
-                        cursor.moveToFirst();
+                    Cursor cursor=database.rawQuery(GET_ANSVERS, new String[]{login, String.valueOf(cont_pos)});
+                    cursor.moveToFirst();
 
-                        ArrayList<AnsObject> ansvers=new ArrayList<>();
-                        if (cursor.getCount()>0)
-                        do{
-                            if(cursor.getInt(0)>=0&&cursor.getInt(1)>=0&&cursor.getInt(2)>=0)
-                            ansvers.add(new AnsObject(cursor.getInt(0),
-                                    Tests.getTestIdFromContest(cursor.getInt(1), cursor.getInt(0)),
-                                    cursor.getInt(2)));
-                        }while (cursor.moveToNext());
+                    ArrayList<AnsObject> ansvers=new ArrayList<>();
+                    if (cursor.getCount()>0)
+                    do{
+                        if(cursor.getInt(0)>=0&&cursor.getInt(1)>=0&&cursor.getInt(2)>=0)
+                        ansvers.add(new AnsObject(cursor.getInt(0),
+                                Tests.getTestIdFromContest(cursor.getInt(1), cursor.getInt(0)),
+                                cursor.getInt(2)));
+                    }while (cursor.moveToNext());
 
-                        cursor.close();
+                    cursor.close();
 
-                        TypingObject typingObject=new TypingObject(Strings.TEST,new Pair(auth_obj,ansvers));
-                        Intent intent=new Intent(contextt, ServerRequest.class);
-                        intent.putExtra(Strings.COMMAND,typingObject);
-                        startService(intent);
+                    TypingObject typingObject=new TypingObject(Strings.TEST,new Pair(auth_obj,ansvers));
+                    Intent intent=new Intent(contextt, ServerRequest.class);
+                    intent.putExtra(Strings.COMMAND,typingObject);
+                    startService(intent);
 
-                        break;
-                    }
+                    break;
                 }
-                return false;
             }
+            return false;
         });
 
         toolbar.inflateMenu(R.menu.menu_choose_test);

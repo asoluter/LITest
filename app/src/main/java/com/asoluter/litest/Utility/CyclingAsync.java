@@ -2,12 +2,9 @@ package com.asoluter.litest.Utility;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 
-import com.asoluter.litest.Objects.TypingObject;
 import com.asoluter.litest.R;
-import com.asoluter.litest.Services.ServerRequest;
 
 public class CyclingAsync extends AsyncTask<Void,Void,Void> {
 
