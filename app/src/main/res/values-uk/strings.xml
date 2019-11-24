@@ -16,7 +16,7 @@
     <string name="reg_not_ok">Щось пішло не так</string>
     <string name="signup_label">Регістрація</string>
     <string name="tests">Оберіть тест</string>
-    <string name="title_activity_ansver">Відповідь</string>
+    <string name="title_activity_answer">Відповідь</string>
     <string name="title_activity_login">Увійти</string>
     <string name="title_activity_settings">Налаштування</string>
     <string name="title_activity_signup">Зареєструватися</string>

@@ -25,8 +25,8 @@
     <string name="no_connection">Отсутствует соединение</string>
     <string name="reg_not_ok">Что-то пошло не так</string>
     <string name="tests">Выберите тест</string>
-    <string name="title_activity_ansver">Ответ</string>
+    <string name="title_activity_answer">Ответ</string>
     <string name="title_activity_choose_test">Выберите тест</string>
     <string name="title_activity_settings">Настройки</string>
-    <string name="wrong_mail_pass">Неправильный логін или пароль</string>
+    <string name="wrong_mail_pass">Неправильный логин или пароль</string>
 </resources>

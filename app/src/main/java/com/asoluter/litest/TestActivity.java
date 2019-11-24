@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.asoluter.litest.Objects.Strings;
 import com.asoluter.litest.Services.DBHelper.DBHelper;
+import com.asoluter.litest.Tests.Tests;
 import com.asoluter.litest.Tests.TestsCover;
 
 import java.util.ArrayList;
@@ -88,16 +89,16 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void setAnsvers(){
-        Bundle ansBundle= TestsCover.getAnsvers(
+        Bundle ansBundle= TestsCover.getAnswers(
                 getIntent().getIntExtra(getString(R.string.test_pos), 0));
-        ArrayList<String> ansvers=ansBundle.getStringArrayList(Strings.ANSVERS);
+        ArrayList<String> answers=ansBundle.getStringArrayList(Strings.ANSWERS);
         ArrayList<Integer> ans_id=ansBundle.getIntegerArrayList(Strings.ANS_ID);
         radioButtons=new ArrayList<>();
 
         chooseLayout = findViewById(R.id.choose_test_list);
         LayoutInflater inflater=(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 
-        if (ans_id != null&&ansvers!=null) {
+        if (ans_id != null&&answers!=null) {
             int ans_id_size=ans_id.size();
             for(int i=0;i<ans_id_size;i++){
                 LinearLayout card=(LinearLayout)inflater.inflate(R.layout.merge_ansver_card,null);
@@ -105,7 +106,7 @@ public class TestActivity extends AppCompatActivity {
                 radio.setTag(ans_id.get(i));
                 card.setTag(ans_id.get(i));
                 TextView ans_text = card.findViewById(R.id.text_ans);
-                ans_text.setText(ansvers.get(i));
+                ans_text.setText(answers.get(i));
 
                 radio.setOnClickListener(onClickListener);
                 card.setOnClickListener(onClickListener);
@@ -120,10 +121,10 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void toggleChecked(){
-        String toggledButton="select ans_id from ansvers where ((user=?)and(cont_id=?)and(test_id=?))";
+        String toggledButton="select ans_id from answers where ((user=?)and(cont_id=?)and(test_id=?))";
 
-        int cont_id=getIntent().getIntExtra(getString(R.string.contest_pos), -1);
-        int test_id=getIntent().getIntExtra(getString(R.string.test_pos),-1);
+        int cont_id = getIntent().getIntExtra(getString(R.string.contest_pos), -1);
+        int test_id = getIntent().getIntExtra(getString(R.string.test_pos),-1);
         Cursor cursor=database.rawQuery(toggledButton,new String[]{preferences.getString("login",""),
                 String.valueOf(cont_id),String.valueOf(test_id)});
         if(cursor.getCount()!=0){
@@ -149,7 +150,7 @@ public class TestActivity extends AppCompatActivity {
                 dp,r.getDisplayMetrics());
     }
 
-    private final String ADD_U_ANSVER="insert or replace into ansvers values (?,?,?,?);";
+    private final String ADD_U_ANSWER ="insert or replace into answers values (?,?,?,?);";
     private View.OnClickListener onClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -159,7 +160,7 @@ public class TestActivity extends AppCompatActivity {
             int ans_id=(int)v.getTag();
 
 
-            database.execSQL(ADD_U_ANSVER,new String[]{preferences.getString("login",""),
+            database.execSQL(ADD_U_ANSWER,new String[]{preferences.getString("login",""),
                     String.valueOf(cont_id),String.valueOf(test_id),String.valueOf(ans_id)});
 
         }

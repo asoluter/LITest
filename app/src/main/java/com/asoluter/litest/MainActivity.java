@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             contestList.setOnItemClickListener((parent, view, position, id) -> {
                 Intent testsStart = new Intent(context, ChooseTestActivity.class);
-                testsStart.putExtra(getString(R.string.contest_pos), Tests.getDataBase().getCont_cont_id().get(position));
+                testsStart.putExtra(getString(R.string.contest_pos), position);
                 startActivity(testsStart);
             });
 

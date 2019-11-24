@@ -144,7 +144,7 @@ public class ServerRequest extends Service {
                     if(activeNet.isAvailable()){
                         //TODO:CHANGE IP IF NEEDED
                         //SocketAddress socketAddress=new InetSocketAddress("192.168.1.7",8000);
-                        SocketAddress socketAddress=new InetSocketAddress("192.168.1.7",8000);
+                        SocketAddress socketAddress=new InetSocketAddress("10.0.2.2",8000);
                         socket=new Socket();
                         online=true;
                         socket.connect(socketAddress,5000);

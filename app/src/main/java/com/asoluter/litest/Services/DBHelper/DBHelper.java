@@ -12,7 +12,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists ansvers(user text ,cont_id int ," +
+        db.execSQL("create table if not exists answers(user text ,cont_id int ," +
                 "test_id int, ans_id int, PRIMARY KEY(user,cont_id,test_id));");
     }
 

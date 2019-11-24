@@ -13,7 +13,7 @@ public class Tests {
         Tests.dataBase = dataBase;
     }
 
-    public synchronized static int getTestIdFromContest(int rel_id,int cont_id){
+    public synchronized static int getTestIdFromContest(int rel_id, int cont_id){
         int k=-1;
         int kc=dataBase.getTest_cont_id().size();
         for(int i=0;i<kc;i++){

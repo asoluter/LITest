@@ -11,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -34,7 +32,7 @@ public class ChooseTestActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private ListView chooseList;
-    private Context contextt;
+    private Context mContext;
     private ArrayAdapter<String> dataAdapter;
     private int cont_pos;
 
@@ -42,7 +40,7 @@ public class ChooseTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_test);
-        contextt =this;
+        mContext =this;
 
         initToolbar();
 
@@ -55,7 +53,7 @@ public class ChooseTestActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                Intent ansIntent=new Intent(contextt, AnswerActivity.class);
+                Intent ansIntent=new Intent(mContext, AnswerActivity.class);
                 ansIntent.putExtra(Strings.TEST_RESULT,intent.getStringExtra(Strings.TEST_RESULT));
                 startActivity(ansIntent);
             }
@@ -93,7 +91,7 @@ public class ChooseTestActivity extends AppCompatActivity {
         chooseList.setAdapter(dataAdapter);
 
         chooseList.setOnItemClickListener((parent, view, position1, id) -> {
-            Intent testStart=new Intent(contextt,TestActivity.class);
+            Intent testStart=new Intent(mContext,TestActivity.class);
             testStart.putExtra(getString(R.string.test_pos), position1);
             testStart.putExtra(getString(R.string.contest_pos), cont_pos);
             testStart.putExtra(getString(R.string.quest),
@@ -103,7 +101,7 @@ public class ChooseTestActivity extends AppCompatActivity {
         });
     }
 
-    private static final String GET_ANSVERS="select cont_id,test_id,ans_id from ansvers where ((user=?)and(cont_id=?))";
+    private static final String GET_ANSWERS ="select cont_id,test_id,ans_id from answers where ((user=?)and(cont_id=?))";
 
     protected void initToolbar(){
         toolbar = findViewById(R.id.choose_test_toolbar);
@@ -118,27 +116,32 @@ public class ChooseTestActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()){
                 case R.id.action_send:{
-                    SQLiteDatabase database=new DBHelper(contextt).getReadableDatabase();
+                    SQLiteDatabase database=new DBHelper(mContext).getReadableDatabase();
 
                     String login=getSharedPreferences("login",MODE_PRIVATE).getString("login", "");
                     AuthObject auth_obj=new AuthObject(login,getSharedPreferences("login",MODE_PRIVATE).getString("pass",""));
 
-                    Cursor cursor=database.rawQuery(GET_ANSVERS, new String[]{login, String.valueOf(cont_pos)});
+                    Cursor cursor=database.rawQuery(GET_ANSWERS, new String[]{login, String.valueOf(cont_pos)});
                     cursor.moveToFirst();
 
-                    ArrayList<AnsObject> ansvers=new ArrayList<>();
+                    ArrayList<AnsObject> answers=new ArrayList<>();
                     if (cursor.getCount()>0)
                     do{
-                        if(cursor.getInt(0)>=0&&cursor.getInt(1)>=0&&cursor.getInt(2)>=0)
-                        ansvers.add(new AnsObject(cursor.getInt(0),
-                                Tests.getTestIdFromContest(cursor.getInt(1), cursor.getInt(0)),
-                                cursor.getInt(2)));
+                        if(cursor.getInt(0)>=0&&cursor.getInt(1)>=0&&cursor.getInt(2)>=0) {
+                            int cont_pos = cursor.getInt(0);
+                            int cont_id = Tests.getDataBase().getCont_cont_id().get(cont_pos);
+                            int test_pos = cursor.getInt(1);
+                            int test_id = Tests.getTestIdFromContest(test_pos, cont_id);
+                            int ans_id = cursor.getInt(2);
+                            answers.add(new AnsObject(cont_id, test_id, ans_id));
+                        }
+
                     }while (cursor.moveToNext());
 
                     cursor.close();
 
-                    TypingObject typingObject=new TypingObject(Strings.TEST,new Pair(auth_obj,ansvers));
-                    Intent intent=new Intent(contextt, ServerRequest.class);
+                    TypingObject typingObject=new TypingObject(Strings.TEST,new Pair(auth_obj,answers));
+                    Intent intent=new Intent(mContext, ServerRequest.class);
                     intent.putExtra(Strings.COMMAND,typingObject);
                     startService(intent);
 

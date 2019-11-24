@@ -62,7 +62,7 @@
         </activity>
         <activity
             android:name=".AnswerActivity"
-            android:label="@string/title_activity_ansver"
+            android:label="@string/title_activity_answer"
 
             android:theme="@style/AppTheme" >
 

@@ -38,7 +38,7 @@
     <string name="test_pos" translatable="false">test_pos</string>
     <string name="quest" translatable="false">quest</string>
     <string name="action_send">Send</string>
-    <string name="title_activity_ansver">Ansver</string>
+    <string name="title_activity_answer">Answer</string>
     <string name="ans_text">Your result</string>
     <string name="tests">Choose test</string>
 
